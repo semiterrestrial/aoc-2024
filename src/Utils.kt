@@ -2,12 +2,14 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 //null if out of bounds
-fun getValueInDirection(currentLocation: Pair<Int, Int>, direction: Direction, data: Array<CharArray>): Pair<Pair<Int,Int>, Char>? {
+fun getValueInDirection(
+    currentLocation: Pair<Int, Int>, direction: Direction, data: Array<CharArray>
+): Pair<Pair<Int, Int>, Char>? {
     val x = currentLocation.first
     val y = currentLocation.second
-    val next = currentLocation.first + direction.delta.first to currentLocation.second + direction.delta.second
-    if(next.first < 0 || next.first >= data.size || next.second < 0 || next.second >= data.size)
-        return null
+    val next = x + direction.delta.first to y + direction.delta.second
+    //bounds check
+    if (next.first < 0 || next.first >= data.size || next.second < 0 || next.second >= data.size) return null
     return next to data[next.second][next.first]
 }
 

@@ -3,10 +3,8 @@ import java.nio.file.Paths
 
 fun main() {
     val lines = Files.lines(Paths.get("day-4-input.txt")).toList()
-    //val lines = Files.lines(Paths.get("day-4-test.txt")).toList()
     val input = lines.map { line -> line.toCharArray() }.toTypedArray()
     assert(lines.size > 0)
-
 
     val directions = arrayOf(
         0 to -1,
@@ -21,13 +19,8 @@ fun main() {
 
     val rangeNames = arrayOf("up", "down", "right", "left", "up right", "up left", "down right", "down left")
 
-    fun progressionFromRange(range: IntRange): IntProgression {
-        val step = if (range.first > range.last) -1 else 1
-        return IntProgression.fromClosedRange(range.first, range.last, step)
-    }
-
     fun findWord(word: String, input: Array<CharArray>): Int {
-        var wordFirstChar = word[0]
+        val wordFirstChar = word[0]
         var matches = 0
         input.forEachIndexed { yIndex, letters ->
             letters.forEachIndexed { xIndex, char ->
@@ -43,7 +36,7 @@ fun main() {
                             currentX += direction.first
                             currentY += direction.second
                             if (currentX < 0 || currentY < 0 || currentX >= letters.size || currentY >= input.size)
-                                break@dir;
+                                break@dir
                         }
                         if (chars.joinToString("") == word) {
                             matches++
@@ -63,7 +56,7 @@ fun main() {
 
     fun findCross(input: Array<CharArray>): Int {
 
-        val directions = arrayOf(
+        val movementDeltas = arrayOf(
             -1 to -1, //up left
             1 to -1,  //up right
             1 to 1, //down right
@@ -74,10 +67,10 @@ fun main() {
         input.forEachIndexed { yIndex, letters ->
             letters.forEachIndexed { xIndex, char ->
                 if (char == 'A') {
-                    val topLeft = xIndex + directions[0].first to yIndex + directions[0].second
-                    val topRight = xIndex + directions[1].first to yIndex + directions[1].second
-                    val bottomRight = xIndex + directions[2].first to yIndex + directions[2].second
-                    val bottomLeft = xIndex + directions[3].first to yIndex + directions[3].second
+                    val topLeft = xIndex + movementDeltas[0].first to yIndex + movementDeltas[0].second
+                    val topRight = xIndex + movementDeltas[1].first to yIndex + movementDeltas[1].second
+                    val bottomRight = xIndex + movementDeltas[2].first to yIndex + movementDeltas[2].second
+                    val bottomLeft = xIndex + movementDeltas[3].first to yIndex + movementDeltas[3].second
                     if (topLeft.first < 0 ||
                         bottomLeft.first < 0 ||
                         topLeft.second < 0 ||
@@ -102,8 +95,6 @@ fun main() {
         return matches
     }
 
-    val lines2 = Files.lines(Paths.get("day-4-test-2.txt")).toList()
-    val input2 = lines2.map { line -> line.toCharArray() }.toTypedArray()
     val result2 = findCross(input)
     println("Result 2: $result2")
 

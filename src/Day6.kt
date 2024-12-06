@@ -1,9 +1,9 @@
 import kotlin.time.measureTime
 
-fun main(args: Array<String>) {
+fun main() {
 
     val input = getInputAsCharArrays("day-6-input.txt")
-    var startYIndex: Int = -1;
+    var startYIndex: Int = -1
     val lineWithGuard = input.filterIndexed { index: Int, chars: CharArray ->
         if (chars.contains('^')) {
             startYIndex = index
@@ -21,7 +21,6 @@ fun main(args: Array<String>) {
         inputCopy1.map { chars: CharArray -> chars.count { it == 'X' } }.sum() + 1 //include starting position
     println("Result 1: $traveledPathLength")
     val simulationTime = measureTime {
-        var simulations = 0
         var loopCount = 0
         for (i in 0..input.size - 1) {
             for (j in 0..input[i].size - 1) {

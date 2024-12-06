@@ -30,8 +30,8 @@ fun main() {
         val states = digits.windowed(2).map { sublist ->
             stateOfPair(sublist[0], sublist[1])
         }
-        var allIncreasing = states.filter { it != State.UNSET }.all { it == State.INCREASING }
-        var allDecreasing = states.filter { it != State.UNSET }.all { it == State.DECREASING }
+        val allIncreasing = states.filter { it != State.UNSET }.all { it == State.INCREASING }
+        val allDecreasing = states.filter { it != State.UNSET }.all { it == State.DECREASING }
         return allDecreasing || allIncreasing
     }
 
