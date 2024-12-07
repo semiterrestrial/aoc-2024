@@ -24,3 +24,5 @@ fun getInputAsCharArrays(inputPath: String): Array<CharArray> {
     assert(lines.size > 0)
     return input
 }
+
+

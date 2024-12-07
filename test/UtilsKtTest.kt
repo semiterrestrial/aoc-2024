@@ -19,4 +19,6 @@ class UtilsKtTest {
         assertEquals('7', getValueInDirection(start, Direction.W, input))
         assertEquals('8', getValueInDirection(start, Direction.NW, input))
     }
+
+
 }
