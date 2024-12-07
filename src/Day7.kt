@@ -13,10 +13,7 @@ fun List<Operator>.generateCombinations(n: Int): List<List<Operator>> {
     }
 }
 
-fun calculate(
-    equations: List<Equation>,
-    operators: List<Operator>
-): Long {
+fun calculate(equations: List<Equation>, operators: List<Operator>): Long {
     return equations.parallelStream().filter { equation ->
         val inputs = equation.inputs
         val combinations = operators.generateCombinations(inputs.size - 1)
