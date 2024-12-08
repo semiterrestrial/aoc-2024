@@ -2,7 +2,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 //null if out of bounds
-fun getValueInDirection(
+fun getPositionAndValueInDirection(
     currentLocation: Pair<Int, Int>, direction: Direction, data: Array<CharArray>
 ): Pair<Pair<Int, Int>, Char>? {
     val x = currentLocation.first
