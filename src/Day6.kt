@@ -54,7 +54,7 @@ private fun simulateGuardRun(
         //naive check, if the whole room size is covered, we must be looping somehow
         if (currentStep > theRoom.size * theRoom[0].size)
             return true
-        val step = getPositionAndValueInDirection(currentPosition, currentMovement, theRoom)
+        val step = theRoom.getPositionAndValueInDirection(currentPosition, currentMovement )
         step?.let { movement ->
             if (movement.second == '#') { //obstacle hit, turn right
                 currentMovementIndex++
