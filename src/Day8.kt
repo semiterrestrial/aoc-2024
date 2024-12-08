@@ -19,14 +19,12 @@ fun main() {
                         var nextPosition: Pair<Int, Int>? = other.position
                         do {
                             val antinodePos = nextPosition!!.first + diff.first to nextPosition.second + diff.second
-                            if (antinodePos.first > -1 && antinodePos.first < bounds.first && antinodePos.second > -1 && antinodePos.second < bounds.second) {
+                            if (positionIsWithinBounds(antinodePos, bounds)) {
                                 add(AntiNode(antinodePos))
                                 nextPosition = antinodePos
-                            } else {
-                                nextPosition = null
-                            }
+                            } else nextPosition = null
                         } while (withHarmonics && nextPosition != null)
-                        //if harmonics, other is also an antinode
+                        //if running with harmonics, other is also an antinode
                         if (withHarmonics) {
                             add(AntiNode(other.position))
                         }
@@ -44,12 +42,11 @@ fun main() {
             if (char != '.') Antenna(char, Pair(yIndex, xIndex)) else null
         }.mapNotNull { it }
     }.flatten().groupBy { it.char }
-    println(
-        "Time taken:  ${
-            measureTime {
-                println("Result 1:${findAntiNodes(antennaeMap, bounds).distinct().count()}")
-                println("Result 2 ${findAntiNodes(antennaeMap, bounds, true).distinct().count()}")
-            }
-        }")
 
+    val time = measureTime {
+        val result1 = findAntiNodes(antennaeMap, bounds).distinct().count()
+        val result2 = findAntiNodes(antennaeMap, bounds, true).distinct().count()
+        printResults(result1, result2)
+    }
+    println("Time spent: $time")
 }

@@ -25,4 +25,16 @@ fun getInputAsCharArrays(inputPath: String): Array<CharArray> {
     return input
 }
 
+fun positionIsWithinBounds(position: Pair<Int, Int>, bounds: Pair<Int,Int>): Boolean {
+    return position.first > -1 && position.first < bounds.first && position.second > -1 && position.second < bounds.second
+}
 
+fun positionsAreWithinBounds(positions: List<Pair<Int, Int>>, bounds: Pair<Int,Int>): Boolean {
+    return positions.all{ positionIsWithinBounds(it, bounds)}
+}
+
+fun printResults(vararg results:Int) {
+    for(i in results.indices){
+        println("Result $i: ${results[i]}")
+    }
+}

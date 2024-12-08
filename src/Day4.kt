@@ -1,101 +1,62 @@
-import java.nio.file.Files
-import java.nio.file.Paths
+import Direction.*
 
 fun main() {
-    val lines = Files.lines(Paths.get("day-4-input.txt")).toList()
-    val input = lines.map { line -> line.toCharArray() }.toTypedArray()
-    assert(lines.size > 0)
+    val input = getInputAsCharArrays("day-4-input.txt")
+    val bounds = input.size to input.first().size
 
-    val directions = arrayOf(
-        0 to -1,
-        0 to 1,
-        1 to 0,
-        -1 to 0,
-        1 to -1,
-        -1 to -1,
-        1 to 1,
-        -1 to 1
-    )
-
-    val rangeNames = arrayOf("up", "down", "right", "left", "up right", "up left", "down right", "down left")
+    val directions = arrayOf(N, S, E, W, NE, NW, SE, SW)
 
     fun findWord(word: String, input: Array<CharArray>): Int {
-        val wordFirstChar = word[0]
+        val firstChar = word[0]
         var matches = 0
         input.forEachIndexed { yIndex, letters ->
-            letters.forEachIndexed { xIndex, char ->
-                if (char == wordFirstChar) {
-
+            letters.mapIndexed { xIndex, char ->
+                if (char == firstChar) {
                     //find in all directions
-                    directions.forEachIndexed { dirIndex, direction ->
+                    directions.forEach { direction ->
                         val chars = mutableListOf<Char>()
                         var currentX = xIndex
                         var currentY = yIndex
-                        dir@ for (i in 0..word.length - 1) {
+                        for (i in word.indices) {
                             chars.addLast(input[currentY][currentX])
-                            currentX += direction.first
-                            currentY += direction.second
-                            if (currentX < 0 || currentY < 0 || currentX >= letters.size || currentY >= input.size)
-                                break@dir
+                            currentX += direction.delta.first
+                            currentY += direction.delta.second
+                            if (!positionIsWithinBounds(currentY to currentX, bounds))
+                                break
                         }
-                        if (chars.joinToString("") == word) {
-                            matches++
-                            println("Found match at line $yIndex, $xIndex using ${rangeNames[dirIndex]}")
-                        }
+                        if (chars.joinToString("") == word) matches++
                     }
-
                 }
             }
         }
         return matches
     }
 
+    val result1 = findWord("XMAS", input)
 
-    val result = findWord("XMAS", input)
-    println("Result 1: $result")
-
-    fun findCross(input: Array<CharArray>): Int {
-
-        val movementDeltas = arrayOf(
-            -1 to -1, //up left
-            1 to -1,  //up right
-            1 to 1, //down right
-            -1 to 1
-        ) //down left
-
-        var matches = 0
-        input.forEachIndexed { yIndex, letters ->
-            letters.forEachIndexed { xIndex, char ->
+    fun findMASCross(input: Array<CharArray>): Int {
+        val lettersToMatch = listOf('M', 'S')
+        return input.mapIndexed { yIndex, letters ->
+            letters.mapIndexed { xIndex, char ->
                 if (char == 'A') {
-                    val topLeft = xIndex + movementDeltas[0].first to yIndex + movementDeltas[0].second
-                    val topRight = xIndex + movementDeltas[1].first to yIndex + movementDeltas[1].second
-                    val bottomRight = xIndex + movementDeltas[2].first to yIndex + movementDeltas[2].second
-                    val bottomLeft = xIndex + movementDeltas[3].first to yIndex + movementDeltas[3].second
-                    if (topLeft.first < 0 ||
-                        bottomLeft.first < 0 ||
-                        topLeft.second < 0 ||
-                        topRight.second < 0 ||
-                        topRight.first >= letters.size ||
-                        bottomRight.first >= letters.size ||
-                        bottomLeft.second >= input.size ||
-                        bottomRight.second >= input.size
-                    )
-                        Unit
-                    else {
+                    val topLeft = xIndex + NW.delta.first to yIndex + NW.delta.second
+                    val topRight = xIndex + NE.delta.first to yIndex + NE.delta.second
+                    val bottomRight = xIndex + SE.delta.first to yIndex + SE.delta.second
+                    val bottomLeft = xIndex + SW.delta.first to yIndex + SW.delta.second
+                    if (positionsAreWithinBounds(listOf(topLeft, topRight, bottomRight, bottomLeft), bounds)) {
                         val tl = input[topLeft.second][topLeft.first]
                         val tr = input[topRight.second][topRight.first]
                         val bl = input[bottomLeft.second][bottomLeft.first]
                         val br = input[bottomRight.second][bottomRight.first]
-                        if (((tl == 'M' && br == 'S') || (tl == 'S' && br == 'M')) && ((bl == 'M' && tr == 'S') || (bl == 'S' && tr == 'M')))
-                            matches++
-                    }
-                }
+                        (listOf(tl, br).containsAll(lettersToMatch) && (listOf(bl, tr).containsAll(lettersToMatch)))
+                    } else false
+                } else
+                    false
             }
-        }
-        return matches
+        }.flatten().count { it }
     }
 
-    val result2 = findCross(input)
-    println("Result 2: $result2")
+    val result2 = findMASCross(input)
+    printResults(result1, result2)
 
 }
