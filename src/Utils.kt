@@ -39,7 +39,7 @@ fun Array<CharArray>.getBounds(): Pair<Int, Int> {
 
 fun printResults(vararg results:Int) {
     for(i in results.indices){
-        println("Result $i: ${results[i]}")
+        println("Result ${i+1}: ${results[i]}")
     }
 }
 
