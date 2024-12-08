@@ -33,8 +33,13 @@ fun positionsAreWithinBounds(positions: List<Pair<Int, Int>>, bounds: Pair<Int,I
     return positions.all{ positionIsWithinBounds(it, bounds)}
 }
 
+fun Array<CharArray>.getBounds(): Pair<Int, Int> {
+    return this.size to this[0].size
+}
+
 fun printResults(vararg results:Int) {
     for(i in results.indices){
         println("Result $i: ${results[i]}")
     }
 }
+

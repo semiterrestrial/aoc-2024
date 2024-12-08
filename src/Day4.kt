@@ -2,7 +2,7 @@ import Direction.*
 
 fun main() {
     val input = getInputAsCharArrays("day-4-input.txt")
-    val bounds = input.size to input.first().size
+    val bounds = input.getBounds()
 
     val directions = arrayOf(N, S, E, W, NE, NW, SE, SW)
 

@@ -35,7 +35,7 @@ fun main() {
     }
 
     val input = getInputAsCharArrays("day-8-input.txt")
-    val bounds = input.size to input[0].size
+    val bounds = input.getBounds()
 
     val antennaeMap = input.mapIndexed { yIndex, chars ->
         chars.mapIndexed { xIndex, char ->
