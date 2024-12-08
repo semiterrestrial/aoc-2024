@@ -6,7 +6,7 @@ data class AntiNode(val position: Pair<Int, Int>)
 fun main() {
     fun findAntiNodes(
         antennae: Map<Char, List<Antenna>>, bounds: Pair<Int, Int>, withHarmonics: Boolean = false
-    ): List<AntiNode> {
+    ): Int {
         return buildList {
             antennae.entries.forEach { entry ->
                 val positions = entry.value
@@ -29,7 +29,7 @@ fun main() {
                     }
                 }
             }
-        }
+        }.distinct().count()
     }
 
     val input = getInputAsCharArrays("day-8-input.txt")
@@ -42,8 +42,8 @@ fun main() {
     }.flatten().groupBy { it.char }
 
     val time = measureTime {
-        val result1 = findAntiNodes(antennaeMap, bounds).distinct().count()
-        val result2 = findAntiNodes(antennaeMap, bounds, true).distinct().count()
+        val result1 = findAntiNodes(antennaeMap, bounds)
+        val result2 = findAntiNodes(antennaeMap, bounds, true)
         printResults(result1, result2)
     }
     println("Time spent: $time")
