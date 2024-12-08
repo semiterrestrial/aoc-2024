@@ -1,8 +1,5 @@
-import java.nio.file.Files
-import java.nio.file.Paths
-
 fun main() {
-    val lines = Files.lines(Paths.get("day-1-input.txt")).toList()
+    val lines = getInputAsList("day-1-input.txt")
     val (firstList, secondList) = lines.map {  s ->
         s.split("   ").let {
             it[0].toInt() to it[1].toInt()

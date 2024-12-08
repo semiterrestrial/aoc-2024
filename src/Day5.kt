@@ -1,9 +1,5 @@
-import java.nio.file.Files
-import java.nio.file.Paths
-
 fun main() {
-    val lines = Files.lines(Paths.get("day-5-input.txt")).toList()
-    assert(lines.size > 0)
+    val lines = getInputAsList("day-5-input.txt")
     val rules = mutableListOf<Pair<Int, Int>>()
     val updates = mutableListOf<List<Int>>()
     //parse rules

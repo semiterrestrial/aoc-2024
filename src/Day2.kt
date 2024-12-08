@@ -1,7 +1,4 @@
 import State.*
-import java.nio.file.Files
-import java.nio.file.Paths
-
 
 enum class State { UNSET, INCREASING, DECREASING, SAME, OUT_OF_RANGE }
 
@@ -30,7 +27,7 @@ fun main() {
         return allDecreasing || allIncreasing
     }
 
-    val input = Files.lines(Paths.get("day-2-input.txt")).toList()
+    val input = getInputAsList("day-2-input.txt")
     val safeLines = input.map { line ->
         isLineSafe(line.split(" ").map(String::toInt))
     }

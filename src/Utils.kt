@@ -19,27 +19,32 @@ enum class Direction(val delta: Pair<Int, Int>) {
 }
 
 fun getInputAsCharArrays(inputPath: String): Array<CharArray> {
-    val lines = Files.lines(Paths.get(inputPath)).toList()
-    val input = lines.map { line -> line.toCharArray() }.toTypedArray()
-    assert(lines.size > 0)
-    return input
+    return getInputAsList(inputPath).map { line -> line.toCharArray() }.toTypedArray()
 }
 
-fun positionIsWithinBounds(position: Pair<Int, Int>, bounds: Pair<Int,Int>): Boolean {
+fun getInputAsList(inputPath: String): List<String> {
+    return Files.lines(Paths.get(inputPath)).toList()
+}
+
+fun getInputAsString(inputPath: String): String {
+    return String(Files.readAllBytes(Paths.get(inputPath)))
+}
+
+fun positionIsWithinBounds(position: Pair<Int, Int>, bounds: Pair<Int, Int>): Boolean {
     return position.first > -1 && position.first < bounds.first && position.second > -1 && position.second < bounds.second
 }
 
-fun positionsAreWithinBounds(positions: List<Pair<Int, Int>>, bounds: Pair<Int,Int>): Boolean {
-    return positions.all{ positionIsWithinBounds(it, bounds)}
+fun positionsAreWithinBounds(positions: List<Pair<Int, Int>>, bounds: Pair<Int, Int>): Boolean {
+    return positions.all { positionIsWithinBounds(it, bounds) }
 }
 
 fun Array<CharArray>.getBounds(): Pair<Int, Int> {
     return this.size to this[0].size
 }
 
-fun printResults(vararg results:Int) {
-    for(i in results.indices){
-        println("Result ${i+1}: ${results[i]}")
+fun printResults(vararg results: Int) {
+    for (i in results.indices) {
+        println("Result ${i + 1}: ${results[i]}")
     }
 }
 

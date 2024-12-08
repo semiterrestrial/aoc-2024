@@ -5,9 +5,7 @@ data class AntiNode(val position: Pair<Int, Int>)
 
 fun main() {
     fun findAntiNodes(
-        antennae: Map<Char, List<Antenna>>,
-        bounds: Pair<Int, Int>,
-        withHarmonics: Boolean = false
+        antennae: Map<Char, List<Antenna>>, bounds: Pair<Int, Int>, withHarmonics: Boolean = false
     ): List<AntiNode> {
         return buildList {
             antennae.entries.forEach { entry ->

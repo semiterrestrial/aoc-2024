@@ -1,5 +1,3 @@
-import java.nio.file.Files
-import java.nio.file.Paths
 import kotlin.time.measureTime
 
 data class Equation(val result: Long, val inputs: List<Long>)
@@ -33,7 +31,7 @@ fun calculate(equations: List<Equation>, operators: List<Operator>): Long {
 
 fun main() {
     val time = measureTime {
-        val lines = Files.lines(Paths.get("day-7-input.txt")).toList()
+        val lines = getInputAsList("day-7-input.txt")
         val eqRegex = """(\d+):(.*)""".toRegex()
         val equations = lines.map { line ->
             val (result, inputs) = eqRegex.matchEntire(line)!!.destructured
